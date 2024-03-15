@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { IconsComponent } from '../icons/icons.component';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [IconsComponent],
+  imports: [IconsComponent, CommonModule, RouterModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
