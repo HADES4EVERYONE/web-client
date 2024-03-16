@@ -12,11 +12,16 @@ import { HttpClient } from '@angular/common/http';
   providers: [NetworkService]
 })
 export class HomeComponent implements OnInit {
-  constructor(private __network: NetworkService) { }
+  constructor(private __network: NetworkService) {
+  }
 
   public popularMovieSubscription = new Subscription();
 
+  public popularGamesSubsrciption = new Subscription();
+
   ngOnInit() {
     this.popularMovieSubscription = this.__network.getPopularMovies().subscribe((res: any) => console.log(res));
+
+    this.popularGamesSubsrciption = this.__network.getPopularGames().subscribe((res: any) => console.log(res))
   }
 }
