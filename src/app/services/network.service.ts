@@ -10,7 +10,8 @@ export class NetworkService {
 
   endpoints = {
     tmdb: 'https://api.themoviedb.org/3/',
-    rawg: 'https://api.rawg.io/api/'
+    tmdbImage: 'http://image.tmdb.org/t/p/',
+    rawg: 'https://api.rawg.io/api/',
   }
 
   private getTmdbHeaders() {
@@ -20,6 +21,10 @@ export class NetworkService {
   }
 
   constructor(private http: HttpClient) { }
+
+  public getTmdbConfig() {
+    return this.http.get(`${this.endpoints.tmdb}configuration`, { headers: this.getTmdbHeaders() })
+  }
 
   public getPopularMovies() {
     return this.http.get(`${this.endpoints.tmdb}movie/popular`, { headers: this.getTmdbHeaders() })
