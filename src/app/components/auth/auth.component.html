@@ -1,0 +1,29 @@
+<div class="container" *ngIf="!isLoggedIn; else loggedInTemplate">
+    <form [formGroup]="authForm" (ngSubmit)="onSubmit()">
+      <mat-form-field appearance="fill">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email">
+        <mat-error *ngIf="authForm.get('email')?.errors?.['required']">Email is required</mat-error>
+        <mat-error *ngIf="authForm.get('email')?.errors?.['email']">Please enter a valid email</mat-error>
+      </mat-form-field>
+  
+      <mat-form-field appearance="fill">
+        <mat-label>Password</mat-label>
+        <input matInput formControlName="password" type="password">
+        <mat-error *ngIf="authForm.get('password')?.errors?.['required']">Password is required</mat-error>
+        <mat-error *ngIf="authForm.get('password')?.errors?.['minLength']">Password must be at least 6 characters</mat-error>
+      </mat-form-field>
+  
+        <button mat-raised-button color="primary" type="submit" [disabled]="!authForm.valid">{{ isLoginMode ? 'Login' : 'Signup' }}</button>
+        <p class="toggle-text">
+            {{ isLoginMode ? 'No account yet?' : 'Already have an account?' }}
+            <a href="#" (click)="toggleMode($event)">{{ isLoginMode ? 'Signup' : 'Login' }}</a>
+        </p>
+    </form>
+</div>
+
+<ng-template #loggedInTemplate>
+    <div>
+      <p>User is logged in</p>
+    </div>
+</ng-template>
