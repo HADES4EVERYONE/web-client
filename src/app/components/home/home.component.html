@@ -1,3 +1,9 @@
 <div class="m-2">
-    <app-card-row [items]="movieItems" [options]="{title: 'Popular'}"></app-card-row>
+    <app-card-row [items]="movieItems" [options]="{title: 'Popular Movies', type: 'tmdb_movie'}"></app-card-row>
+</div>
+<div class="m-2">
+    <app-card-row [items]="tvItems" [options]="{title: 'Popular TV Shows', type: 'tmdb_tv'}"></app-card-row>
+</div>
+<div class="m-2">
+    <app-card-row [items]="gameItems" [options]="{title: 'Popular Games', type: 'igdb'}"></app-card-row>
 </div>

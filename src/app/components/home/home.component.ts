@@ -17,17 +17,26 @@ export class HomeComponent implements OnInit {
   }
 
   public popularMovieSubscription = new Subscription();
-  movieItems: any = []
-
   public popularGamesSubsrciption = new Subscription();
+  public popularTvSubscription = new Subscription();
+  movieItems: any = [];
+  gameItems: any = [];
+  tvItems: any = [];
+
+
 
 
   ngOnInit() {
     this.popularMovieSubscription = this.__network.getPopularMovies().subscribe((res: any) => {
-      console.log(res)
       this.movieItems = res.results;
     });
 
-    this.popularGamesSubsrciption = this.__network.getPopularGames().subscribe((res: any) => console.log(res))
+    this.popularGamesSubsrciption = this.__network.getPopularGames().subscribe((res: any) => {
+      this.gameItems = res.results;
+    })
+
+    this.popularTvSubscription = this.__network.getPopularTv().subscribe((res: any) => {
+      this.tvItems = res.results;
+    })
   }
 }

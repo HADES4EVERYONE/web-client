@@ -22,6 +22,7 @@ export class NetworkService {
 
   constructor(private http: HttpClient) { }
 
+  // hard coded
   public getTmdbConfig() {
     return this.http.get(`${this.endpoints.tmdb}configuration`, { headers: this.getTmdbHeaders() })
   }
@@ -32,6 +33,10 @@ export class NetworkService {
 
   public getPopularGames() {
     return this.http.get(`${this.endpoints.rawg}games?key=${creds.RAWG.key}&metacritic=80,100`)
+  }
+
+  public getPopularTv() {
+    return this.http.get(`${this.endpoints.tmdb}discover/tv?page=1&sort_by=popularity.desc`, { headers: this.getTmdbHeaders() })
   }
 
 }
