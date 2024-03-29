@@ -4,6 +4,7 @@ import { TvComponent } from './components/tv/tv.component';
 import { GameComponent } from './components/game/game.component';
 import { BookComponent } from './components/book/book.component';
 import { HomeComponent } from './components/home/home.component';
+import { AuthComponent } from './components/auth/auth.component';
 
 export const routes: Routes = [
     {
@@ -23,4 +24,7 @@ export const routes: Routes = [
     }, {
         path: 'books',
         component: BookComponent
+    }, {
+        path: 'auth',
+        component: AuthComponent
     }];
