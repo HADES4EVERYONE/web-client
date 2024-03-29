@@ -1,13 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { NetworkService } from '../../services/network.service';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-auth',
   standalone: true,
   imports: [
     CommonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    RouterModule
   ],
   templateUrl: './auth.component.html',
   styleUrls: ['./auth.component.scss']
@@ -17,13 +20,26 @@ export class AuthComponent implements OnInit {
   isLoginMode = true;
   isLoggedIn = false;
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(private formBuilder: FormBuilder, private __network: NetworkService, private router: Router) { }
 
   ngOnInit(): void {
+    let user = this.__network.getUser();
+    if (user) {
+      console.log(user);
+      if (user.model.length) {
+        this.router.navigate(['home'])
+      } else {
+        this.router.navigate(['user-genres'])
+      }
+    }
+
     this.authForm = this.formBuilder.group({
+      name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]]
+      password: ['', [Validators.required, Validators.minLength(6)]],
     });
+
+
   }
 
   toggleMode(event: Event): void {
@@ -34,8 +50,13 @@ export class AuthComponent implements OnInit {
 
   onSubmit(): void {
     if (this.authForm.valid) {
-      console.log(this.isLoginMode ? 'Logging in...' : 'Signing up...', this.authForm.value);
-      this.authForm.reset();
+      if (!this.isLoggedIn) {
+        this.__network.createUser({ ...this.authForm.value, model: [] })
+        this.authForm.reset();
+
+        // navigate to genre form
+        this.router.navigate(['user-genres'])
+      }
     } else {
       console.error('Form is not valid', this.authForm.value);
     }
