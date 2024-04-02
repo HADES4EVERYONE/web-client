@@ -5,6 +5,7 @@ import { GameComponent } from './components/game/game.component';
 import { BookComponent } from './components/book/book.component';
 import { HomeComponent } from './components/home/home.component';
 import { AuthComponent } from './components/auth/auth.component';
+import { UserGenresComponent } from './components/user-genres/user-genres.component';
 
 export const routes: Routes = [
     {
@@ -27,4 +28,8 @@ export const routes: Routes = [
     }, {
         path: 'auth',
         component: AuthComponent
-    }];
+    }, {
+        path: 'user-genres',
+        component: UserGenresComponent
+    }
+];

@@ -17,7 +17,10 @@ export class HeaderComponent implements OnInit {
 
   constructor(private __network: NetworkService) { }
 
+  isLoggedIn: boolean = false
+
   ngOnInit(): void {
     // this.__network.getTmdbConfig().subscribe(res => console.log(res));
+    this.isLoggedIn = this.__network.getLoginStatus()
   }
 }
