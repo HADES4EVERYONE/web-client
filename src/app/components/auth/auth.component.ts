@@ -51,7 +51,7 @@ export class AuthComponent implements OnInit {
   onSubmit(): void {
     if (this.authForm.valid) {
       if (!this.isLoggedIn) {
-        this.__network.createUser({ ...this.authForm.value, model: [] })
+        this.__network.storeUser({ ...this.authForm.value, model: {} })
         this.authForm.reset();
 
         // navigate to genre form

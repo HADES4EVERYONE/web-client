@@ -57,13 +57,18 @@ export class NetworkService {
     return this.http.get(`${this.endpoints.tmdb}discover/tv?page=1&sort_by=popularity.desc`, { headers: this.getTmdbHeaders() })
   }
 
-  public createUser(userObject: any) {
+  public storeUser(userObject: any) {
     this.isUserLoggedIn = true;
     localStorage.setItem('user', JSON.stringify(userObject))
   }
 
   public getLoginStatus() {
-    return this.isUserLoggedIn;
+    let user = this.getUser();
+    if (user) {
+      this.isUserLoggedIn = true
+      return this.isUserLoggedIn
+    }
+    return false;
   }
 
   public getUser() {
