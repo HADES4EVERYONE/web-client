@@ -29,7 +29,8 @@ export class AuthComponent implements OnInit {
       if (user.model.length) {
         this.router.navigate(['home'])
       } else {
-        this.router.navigate(['user-genres'])
+        this.router.navigate(['home'])
+        // this.router.navigate(['user-genres'])
       }
     }
 

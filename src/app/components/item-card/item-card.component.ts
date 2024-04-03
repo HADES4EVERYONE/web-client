@@ -24,4 +24,8 @@ export class ItemCardComponent implements OnInit {
   getImage(src: string) {
     return `${this.__network.endpoints.tmdbImage}w185/${src}`
   }
+
+  addToWishlist(item: any): void {
+    console.log('Adding to wishlist:', item);
+  }
 }

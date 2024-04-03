@@ -6,6 +6,7 @@ import { BookComponent } from './components/book/book.component';
 import { HomeComponent } from './components/home/home.component';
 import { AuthComponent } from './components/auth/auth.component';
 import { UserGenresComponent } from './components/user-genres/user-genres.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 export const routes: Routes = [
     {
@@ -31,5 +32,8 @@ export const routes: Routes = [
     }, {
         path: 'user-genres',
         component: UserGenresComponent
+    }, {
+        path: 'profile',
+        component: ProfileComponent
     }
 ];
