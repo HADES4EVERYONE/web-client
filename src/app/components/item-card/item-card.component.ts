@@ -11,6 +11,7 @@ import { CommonModule } from '@angular/common';
   providers: [NetworkService]
 })
 export class ItemCardComponent implements OnInit {
+  isLoggedIn = false;
 
   constructor(private __network: NetworkService) { }
 
@@ -19,6 +20,11 @@ export class ItemCardComponent implements OnInit {
 
   ngOnInit(): void {
     console.log(this.item);
+    let user = this.__network.getUser();
+    if (user) {
+      console.log(user);
+      this.isLoggedIn = true;
+    }
   }
 
   getImage(src: string) {
