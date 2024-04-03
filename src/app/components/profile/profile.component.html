@@ -1,0 +1,29 @@
+<div class="container mx-auto">
+    <h1 class="text-xl font-bold mb-4">My Profile</h1>
+    
+    <div class="wishlist-section">
+      <h2 class="text-lg font-semibold mb-2">My Wishlist</h2>
+      <div class="grid grid-cols-3 gap-4">
+        <div>
+          <h3 class="text-md font-semibold mb-1">Movies</h3>
+          <ul id="wishlistMovies">
+            <li *ngFor="let movie of wishlistMovies">{{ movie.title }}</li>
+          </ul>          
+        </div>
+        <div>
+          <h3 class="text-md font-semibold mb-1">TV Shows</h3>
+          <ul id="wishlistTVShows">
+            <li *ngFor="let TVshow of wishlistTVShows">{{ TVshow.title }}</li>
+          </ul>          
+        </div>
+        <div>
+          <h3 class="text-md font-semibold mb-1">Games</h3>
+          <ul id="wishlistGames">
+            <li *ngFor="let game of wishlistGames">{{ game.title }}</li>
+          </ul>          
+        </div>
+      </div>
+    </div>
+  
+  </div>
+  

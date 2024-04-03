@@ -8,6 +8,7 @@ import { AuthComponent } from './components/auth/auth.component';
 import { UserGenresComponent } from './components/user-genres/user-genres.component';
 import { authGuard } from './services/auth.guard';
 import { ItemDetailsComponent } from './components/item-details/item-details.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 export const routes: Routes = [
     {
@@ -38,5 +39,8 @@ export const routes: Routes = [
     {
         path: 'item-details/:type/:id',
         component: ItemDetailsComponent,
+    }, {
+        path: 'profile',
+        component: ProfileComponent
     }
 ];

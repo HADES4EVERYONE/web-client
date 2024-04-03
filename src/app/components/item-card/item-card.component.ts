@@ -31,4 +31,8 @@ export class ItemCardComponent implements OnInit {
     console.log(item);
     this.router.navigate([`/item-details/${this.options.type}/${this.item.id}`])
   }
+
+  addToWishlist(item: any): void {
+    console.log('Adding to wishlist:', item);
+  }
 }
