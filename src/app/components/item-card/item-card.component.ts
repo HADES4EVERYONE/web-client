@@ -1,6 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { NetworkService } from '../../services/network.service';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-item-card',
@@ -12,16 +13,22 @@ import { CommonModule } from '@angular/common';
 })
 export class ItemCardComponent implements OnInit {
 
-  constructor(private __network: NetworkService) { }
+  constructor(private __network: NetworkService, private router: Router) { }
 
   @Input() item: any = {}
   @Input() options: any = {}
 
+  public itemModal: any = {};
+
   ngOnInit(): void {
-    console.log(this.item);
   }
 
   getImage(src: string) {
-    return `${this.__network.endpoints.tmdbImage}w185/${src}`
+    return `${this.__network.endpoints.tmdbImage}w154/${src}`
+  }
+
+  onDetails(item: any) {
+    console.log(item);
+    this.router.navigate([`/item-details/${this.options.type}/${this.item.id}`])
   }
 }

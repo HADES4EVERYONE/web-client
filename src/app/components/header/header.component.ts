@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { IconsComponent } from '../icons/icons.component';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { NetworkService } from '../../services/network.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -15,12 +16,19 @@ import { NetworkService } from '../../services/network.service';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(private __network: NetworkService) { }
+  constructor(private __network: NetworkService, private router: Router) { }
 
   isLoggedIn: boolean = false
+  loginSubscription = new Subscription()
 
   ngOnInit(): void {
-    // this.__network.getTmdbConfig().subscribe(res => console.log(res));
-    this.isLoggedIn = this.__network.getLoginStatus()
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.__network.checkLoginStatus()
+      }
+    })
+    this.loginSubscription = this.__network.loginStatus.subscribe(res => {
+      this.isLoggedIn = res
+    })
   }
 }

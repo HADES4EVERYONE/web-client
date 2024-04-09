@@ -25,8 +25,7 @@ export class AuthComponent implements OnInit {
   ngOnInit(): void {
     let user = this.__network.getUser();
     if (user) {
-      console.log(user);
-      if (user.model.length) {
+      if (user && user.model && user.model.length) {
         this.router.navigate(['home'])
       } else {
         this.router.navigate(['user-genres'])
@@ -34,7 +33,7 @@ export class AuthComponent implements OnInit {
     }
 
     this.authForm = this.formBuilder.group({
-      name: ['', Validators.required],
+      name: [''],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
     });
@@ -53,8 +52,6 @@ export class AuthComponent implements OnInit {
       if (!this.isLoggedIn) {
         this.__network.storeUser({ ...this.authForm.value, model: {} })
         this.authForm.reset();
-
-        // navigate to genre form
         this.router.navigate(['user-genres'])
       }
     } else {
