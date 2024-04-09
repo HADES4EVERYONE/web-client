@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { creds } from '../../creds'
-import { Subject, forkJoin, map } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, forkJoin, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +24,8 @@ export class NetworkService {
 
   constructor(private http: HttpClient) { }
 
+  loginStatus = new Subject<boolean>();
+
   // hard coded
   public getTmdbConfig() {
     return this.http.get(`${this.endpoints.tmdb}configuration`, { headers: this.getTmdbHeaders() })
@@ -31,6 +33,10 @@ export class NetworkService {
 
   public getMovieGenres() {
     return this.http.get(`${this.endpoints.tmdb}genre/movie/list?language=en`, { headers: this.getTmdbHeaders() })
+  }
+
+  public getMovieDetails(movieId: string) {
+    return this.http.get(`${this.endpoints.tmdb}movie/${movieId}`, { headers: this.getTmdbHeaders() })
   }
 
   public getTvGenres() {
@@ -49,12 +55,27 @@ export class NetworkService {
     return this.http.get(`${this.endpoints.tmdb}movie/popular`, { headers: this.getTmdbHeaders() })
   }
 
+  public getMoviesWithGenreId(genre_string: string) {
+    return this.http.get(`${this.endpoints.tmdb}discover/movie`, {
+      params: {
+        "with_genres": genre_string
+      },
+      headers: this.getTmdbHeaders()
+    })
+  }
+
   public getPopularGames() {
     return this.http.get(`${this.endpoints.rawg}games?key=${creds.RAWG.key}&metacritic=80,100`)
   }
 
   public getPopularTv() {
     return this.http.get(`${this.endpoints.tmdb}discover/tv?page=1&sort_by=popularity.desc`, { headers: this.getTmdbHeaders() })
+  }
+
+  public checkLoginStatus() {
+    let userLogin = this.getLoginStatus()
+    console.log(userLogin)
+    this.loginStatus.next(userLogin)
   }
 
   public storeUser(userObject: any) {

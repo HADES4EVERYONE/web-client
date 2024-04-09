@@ -6,6 +6,8 @@ import { BookComponent } from './components/book/book.component';
 import { HomeComponent } from './components/home/home.component';
 import { AuthComponent } from './components/auth/auth.component';
 import { UserGenresComponent } from './components/user-genres/user-genres.component';
+import { authGuard } from './services/auth.guard';
+import { ItemDetailsComponent } from './components/item-details/item-details.component';
 
 export const routes: Routes = [
     {
@@ -30,6 +32,11 @@ export const routes: Routes = [
         component: AuthComponent
     }, {
         path: 'user-genres',
-        component: UserGenresComponent
+        component: UserGenresComponent,
+        canActivate: [authGuard]
+    },
+    {
+        path: 'item-details/:type/:id',
+        component: ItemDetailsComponent,
     }
 ];
