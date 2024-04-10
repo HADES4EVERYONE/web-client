@@ -64,6 +64,10 @@ export class NetworkService {
     })
   }
 
+  public getAllMovies(genreObj: any) {
+    return forkJoin(genreObj)
+  }
+
   public getPopularGames() {
     return this.http.get(`${this.endpoints.rawg}games?key=${creds.RAWG.key}&metacritic=80,100`)
   }
@@ -74,7 +78,6 @@ export class NetworkService {
 
   public checkLoginStatus() {
     let userLogin = this.getLoginStatus()
-    console.log(userLogin)
     this.loginStatus.next(userLogin)
   }
 
