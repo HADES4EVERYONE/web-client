@@ -14,6 +14,7 @@ import { CommonModule } from '@angular/common';
 export class UserGenresComponent implements OnInit {
 
   genreSubscription = new Subscription
+  public successMessage: string = '';
 
   allGenres: any = {
     movieGenres: [],
@@ -30,6 +31,14 @@ export class UserGenresComponent implements OnInit {
   showWarning: string = '';
 
   constructor(private __network: NetworkService) { }
+
+  showSuccessMessage(str: string) {
+    this.successMessage = str
+
+    setTimeout(() => {
+      this.successMessage = ''
+    }, 5000)
+  }
 
   ngOnInit(): void {
     let user = this.__network.getUser();
@@ -126,6 +135,7 @@ export class UserGenresComponent implements OnInit {
       genres: selectedGenres
     };
     this.__network.storeUser(user)
+    this.showSuccessMessage('Genres saved successfully')
   }
 
   selectGenre(item: any, type: string) {

@@ -17,6 +17,8 @@ export class ItemDetailsComponent implements OnInit {
 
   public totalRating = 0;
 
+  public successMessage = '';
+
   public allRating: any = [
     {
       value: 1,

@@ -16,6 +16,11 @@ export class MovieComponent implements OnInit {
   public isModelAdded = false;
   public genreReccs: any = []
   public isObjectPopulated = false
+
+  sortByWeight(g_1: any, g_2: any) {
+    return g_2.weight - g_1.weight
+  }
+
   ngOnInit(): void {
     let user = this.data.getUser()
     let userSelectedGenres = []
@@ -33,15 +38,17 @@ export class MovieComponent implements OnInit {
         this.data.getAllMovies(asyncObj).subscribe((res: any) => {
           Object.keys(res).forEach(r => {
             let genre_name = '';
+            let weight = 0;
             mGenres.forEach((g: any) => {
-              console.log(g)
               if (g.id == r) {
                 genre_name = g.name
+                weight = g.weight
               }
             })
-            console.log(genre_name);
-            this.genreReccs.push({ genre: genre_name, results: res[r].results })
+            this.genreReccs.push({ genre: genre_name, results: res[r].results, weight })
           })
+
+          this.genreReccs.sort(this.sortByWeight)
         })
       }
     } else {
