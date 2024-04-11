@@ -31,4 +31,9 @@ export class HeaderComponent implements OnInit {
       this.isLoggedIn = res
     })
   }
+
+  logout(): void {
+    console.log('logout')
+    this.router.navigate(['home'])
+  }
 }

@@ -41,9 +41,7 @@ export const routes: Routes = [
         component: ItemDetailsComponent,
     }, {
         path: 'wishlist',
-        component: WishlistComponent
-    }, {
-        path: 'user-genres',
-        component: UserGenresComponent
+        component: WishlistComponent,
+        canActivate: [authGuard]
     }
 ];

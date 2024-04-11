@@ -25,12 +25,7 @@ export class AuthComponent implements OnInit {
   ngOnInit(): void {
     let user = this.__network.getUser();
     if (user) {
-      if (user && user.model && user.model.length) {
-        this.router.navigate(['home'])
-      } else {
-        this.router.navigate(['home'])
-        // this.router.navigate(['user-genres'])
-      }
+      this.router.navigate(['home'])
     }
 
     this.authForm = this.formBuilder.group({
