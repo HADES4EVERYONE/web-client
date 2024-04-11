@@ -42,8 +42,4 @@ export class ItemCardComponent implements OnInit {
   addToWishlist(item: any): void {
     console.log('Adding to wishlist:', item);
   }
-
-  addToWishlist(item: any): void {
-    console.log('Adding to wishlist:', item);
-  }
 }
