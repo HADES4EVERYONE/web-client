@@ -9,7 +9,6 @@ import { UserGenresComponent } from './components/user-genres/user-genres.compon
 import { ProfileComponent } from './components/profile/profile.component';
 import { authGuard } from './services/auth.guard';
 import { ItemDetailsComponent } from './components/item-details/item-details.component';
-import { ProfileComponent } from './components/profile/profile.component';
 
 export const routes: Routes = [
     {
