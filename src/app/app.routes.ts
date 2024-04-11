@@ -42,5 +42,8 @@ export const routes: Routes = [
     }, {
         path: 'wishlist',
         component: WishlistComponent
+    }, {
+        path: 'user-genres',
+        component: UserGenresComponent
     }
 ];
