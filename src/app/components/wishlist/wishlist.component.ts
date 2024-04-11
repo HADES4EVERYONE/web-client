@@ -2,13 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-profile',
-  templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.scss'],
+  selector: 'app-wishlist',
+  templateUrl: './wishlist.component.html',
+  styleUrls: ['./wishlist.component.scss'],
   standalone: true,
   imports: [CommonModule],
 })
-export class ProfileComponent implements OnInit {
+export class WishlistComponent implements OnInit {
   wishlistMovies: any[] = [];
   wishlistTVShows: any[] = [];
   wishlistGames: any[] = [];
