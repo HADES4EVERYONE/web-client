@@ -1,3 +1,11 @@
 <div class="m-2">
-    <app-card-row [items]="genreRecc" [options]="{title: 'Recommended Movies', type: 'tmdb_movie'}"></app-card-row>
+    <section>
+        <div class="p-2 w-full items-center">
+            <h4 class="text-xl dark:text-white">Recommended</h4>
+            <div class="mb-2" *ngFor="let genreRecc of genreReccs">
+                <app-card-row [items]="genreRecc.results"
+                    [options]="{title: genreRecc.genre, type: 'tmdb_movie'}"></app-card-row>
+            </div>
+        </div>
+    </section>
 </div>
