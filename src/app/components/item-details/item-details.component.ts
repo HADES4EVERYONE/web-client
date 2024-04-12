@@ -47,6 +47,7 @@ export class ItemDetailsComponent implements OnInit {
       switch (res.type) {
         case 'tmdb_movie':
           this.__network.getMovieDetails(res.id).subscribe(res => {
+            console.log(res);
             this.itemDetails = res
           })
 
