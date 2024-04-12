@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { NetworkService } from '../../services/network.service';
 import { CardRowComponent } from '../card-row/card-row.component';
+<<<<<<< HEAD
 import { CommonModule } from '@angular/common';
+=======
+>>>>>>> 0fc840c16b56fe447e85cfaf473d46bab29583c9
 
 @Component({
   selector: 'app-movie',
