@@ -35,7 +35,7 @@ export class MovieComponent implements OnInit {
           asyncObj[g.id] = this.data.getMoviesWithGenreId(g.id)
         })
 
-        this.data.getAllMovies(asyncObj).subscribe((res: any) => {
+        this.data.getParallelData(asyncObj).subscribe((res: any) => {
           Object.keys(res).forEach(r => {
             let genre_name = '';
             let weight = 0;

@@ -28,7 +28,6 @@ export class ItemCardComponent implements OnInit {
   }
 
   onDetails(item: any) {
-    console.log(item);
     this.router.navigate([`/item-details/${this.options.type}/${this.item.id}`])
   }
 }
