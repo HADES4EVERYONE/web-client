@@ -1,1 +1,11 @@
-<p>game works!</p>
+<div class="m-2">
+    <section>
+        <div class="w-full items-center">
+            <h4 class="text-xl dark:text-white">Recommended</h4>
+            <div class="" *ngFor="let genreRecc of genreReccs">
+                <app-card-row [items]="genreRecc.results"
+                    [options]="{title: genreRecc.genre, type: 'rawg'}"></app-card-row>
+            </div>
+        </div>
+    </section>
+</div>

@@ -1,1 +1,11 @@
-<p>tv works!</p>
+<div class="m-2">
+    <section>
+        <div class="p-2 w-full items-center">
+            <h4 class="text-xl dark:text-white">Recommended</h4>
+            <div class="mb-2" *ngFor="let genreRecc of genreReccs">
+                <app-card-row [items]="genreRecc.results"
+                    [options]="{title: genreRecc.genre, type: 'tmdb_tv'}"></app-card-row>
+            </div>
+        </div>
+    </section>
+</div>
