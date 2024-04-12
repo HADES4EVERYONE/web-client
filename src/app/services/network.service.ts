@@ -43,6 +43,14 @@ export class NetworkService {
     return this.http.get(`${this.endpoints.tmdb}genre/tv/list?language=en`, { headers: this.getTmdbHeaders() })
   }
 
+  public getTvDetails(id: string) {
+    return this.http.get(`${this.endpoints.tmdb}tv/${id}`, { headers: this.getTmdbHeaders() })
+  }
+
+  public getGameDetails(id: string) {
+    return this.http.get(`${this.endpoints.rawg}games/${id}?key=${creds.RAWG.key}`)
+  }
+
   public getGameGenres() {
     return this.http.get(`${this.endpoints.rawg}genres?key=${creds.RAWG.key}`)
   }
@@ -64,6 +72,27 @@ export class NetworkService {
     })
   }
 
+  public getTvWithGenreId(genre_string: string) {
+    return this.http.get(`${this.endpoints.tmdb}discover/tv`, {
+      params: {
+        "with_genres": genre_string
+      },
+      headers: this.getTmdbHeaders()
+    })
+  }
+
+  public getGamesWithGenreId(genre_string: string) {
+    return this.http.get(`${this.endpoints.rawg}games?key=${creds.RAWG.key}`, {
+      params: {
+        "genres": genre_string
+      }
+    })
+  }
+
+  public getParallelData(genreObj: any) {
+    return forkJoin(genreObj)
+  }
+
   public getPopularGames() {
     return this.http.get(`${this.endpoints.rawg}games?key=${creds.RAWG.key}&metacritic=80,100`)
   }
@@ -74,7 +103,6 @@ export class NetworkService {
 
   public checkLoginStatus() {
     let userLogin = this.getLoginStatus()
-    console.log(userLogin)
     this.loginStatus.next(userLogin)
   }
 
