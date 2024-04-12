@@ -6,6 +6,7 @@ import { BookComponent } from './components/book/book.component';
 import { HomeComponent } from './components/home/home.component';
 import { AuthComponent } from './components/auth/auth.component';
 import { UserGenresComponent } from './components/user-genres/user-genres.component';
+import { WishlistComponent } from './components/wishlist/wishlist.component';
 import { authGuard } from './services/auth.guard';
 import { ItemDetailsComponent } from './components/item-details/item-details.component';
 
@@ -38,5 +39,9 @@ export const routes: Routes = [
     {
         path: 'item-details/:type/:id',
         component: ItemDetailsComponent,
+    }, {
+        path: 'wishlist',
+        component: WishlistComponent,
+        canActivate: [authGuard]
     }
 ];

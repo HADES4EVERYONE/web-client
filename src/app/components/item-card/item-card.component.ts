@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
   providers: [NetworkService]
 })
 export class ItemCardComponent implements OnInit {
+  isLoggedIn = false;
 
   constructor(private __network: NetworkService, private router: Router) { }
 
@@ -21,6 +22,12 @@ export class ItemCardComponent implements OnInit {
   public itemModal: any = {};
 
   ngOnInit(): void {
+    console.log(this.item);
+    let user = this.__network.getUser();
+    if (user) {
+      console.log(user);
+      this.isLoggedIn = true;
+    }
   }
 
   getImage(src: string) {
@@ -29,5 +36,9 @@ export class ItemCardComponent implements OnInit {
 
   onDetails(item: any) {
     this.router.navigate([`/item-details/${this.options.type}/${this.item.id}`])
+  }
+
+  addToWishlist(item: any): void {
+    console.log('Adding to wishlist:', item);
   }
 }
