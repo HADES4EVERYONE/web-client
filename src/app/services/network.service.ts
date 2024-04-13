@@ -12,7 +12,7 @@ export class NetworkService {
     tmdb: 'https://api.themoviedb.org/3/',
     tmdbImage: 'http://image.tmdb.org/t/p/',
     rawg: 'https://api.rawg.io/api/',
-    backend: 'http://127.0.0.1:14138'
+    backend: ' https://hadesapi.iocky.com/'
   }
 
   private getTmdbHeaders() {
