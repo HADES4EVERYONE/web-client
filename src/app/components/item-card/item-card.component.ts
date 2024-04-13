@@ -22,10 +22,8 @@ export class ItemCardComponent implements OnInit {
   public itemModal: any = {};
 
   ngOnInit(): void {
-    console.log(this.item);
     let user = this.__network.getUser();
     if (user) {
-      console.log(user);
       this.isLoggedIn = true;
     }
   }

@@ -45,10 +45,29 @@ export class AuthComponent implements OnInit {
 
   onSubmit(): void {
     if (this.authForm.valid) {
-      if (!this.isLoggedIn) {
-        this.__network.storeUser({ ...this.authForm.value, model: {} })
-        this.authForm.reset();
-        this.router.navigate(['user-genres'])
+      if (this.isLoginMode) {
+        let data = {
+          username: this.authForm.value.email,
+          password: this.authForm.value.password
+        }
+        this.__network.logUserIn(data).subscribe((res: any) => {
+          if (res.message === 'Login successful.') {
+            this.__network.storeUser(res.data)
+            this.authForm.reset();
+            this.router.navigate([''])
+          }
+        })
+      } else {
+        let data = {
+          realname: this.authForm.value.name,
+          username: this.authForm.value.email,
+          password: this.authForm.value.password
+        }
+        this.__network.registerUser(data).subscribe((res: any) => {
+          this.__network.storeUser(res.data)
+          this.authForm.reset();
+          this.router.navigate(['user-genres'])
+        })
       }
     } else {
       console.error('Form is not valid', this.authForm.value);

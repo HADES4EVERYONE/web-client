@@ -48,6 +48,10 @@ export class UserGenresComponent implements OnInit {
       userSelectedGenres = user.model.genres;
     }
 
+    this.__network.getUserModel().subscribe((res: any) => {
+      userSelectedGenres = res.data.genres
+    })
+
     this.genreSubscription = this.__network.getAllGenres().subscribe((res: any) => {
       if (!userSelectedGenres.length) {
         this.allGenres.movieGenres = res[0].genres.map((g: any) => {
@@ -130,12 +134,15 @@ export class UserGenresComponent implements OnInit {
       ...this.allGenres.tvGenres.filter((g: any) => g.isSelected).map((g: any) => { return { name: g.name, id: g.id, type: g.type, weight: g.weight } }),
       ...this.allGenres.gameGenres.filter((g: any) => g.isSelected).map((g: any) => { return { name: g.name, id: g.id, type: g.type, weight: g.weight } })
     ]
-    let user = this.__network.getUser()
-    user.model = {
+    // let user = this.__network.getUser()
+    let model = {
       genres: selectedGenres
     };
-    this.__network.storeUser(user)
-    this.showSuccessMessage('Genres saved successfully')
+    // this.__network.storeUser(user)
+    this.__network.postModel(model).subscribe(res => {
+      this.showSuccessMessage('Genres saved successfully')
+    })
+
   }
 
   selectGenre(item: any, type: string) {

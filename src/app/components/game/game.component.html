@@ -1,4 +1,4 @@
-<div class="m-2">
+<div class="m-2" *ngIf="isModelAdded">
     <section>
         <div class="w-full items-center">
             <h4 class="text-xl dark:text-white">Recommended</h4>
@@ -7,5 +7,13 @@
                     [options]="{title: genreRecc.genre, type: 'rawg'}"></app-card-row>
             </div>
         </div>
+    </section>
+</div>
+
+<div class="m-2" *ngIf="!isModelAdded">
+    <section>
+        <p class="text-xl"> Please select some genres from <a [routerLink]="['/user-genres']"
+                class="text-blue-700">here,</a> so we can make
+            some good recommendations! </p>
     </section>
 </div>

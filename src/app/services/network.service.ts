@@ -12,6 +12,7 @@ export class NetworkService {
     tmdb: 'https://api.themoviedb.org/3/',
     tmdbImage: 'http://image.tmdb.org/t/p/',
     rawg: 'https://api.rawg.io/api/',
+    backend: 'http://127.0.0.1:5000'
   }
 
   private getTmdbHeaders() {
@@ -25,6 +26,17 @@ export class NetworkService {
   constructor(private http: HttpClient) { }
 
   loginStatus = new Subject<boolean>();
+
+  public getSessionId() {
+    let user = this.getUser()
+    if (user) {
+      return user.session_id
+    }
+  }
+
+  public getRequestHeaders() {
+    return new Headers().set('Authorization', this.getSessionId())
+  }
 
   // hard coded
   public getTmdbConfig() {
@@ -106,9 +118,33 @@ export class NetworkService {
     this.loginStatus.next(userLogin)
   }
 
+  public logUserIn(userObject: any) {
+    return this.http.post(`${this.endpoints.backend}/login`, userObject)
+  }
+
+  public getUserModel() {
+    return this.http.get(`${this.endpoints.backend}/get_model`, { headers: { "Authorization": this.getSessionId() } })
+  }
+
+  public postModel(userModel: any) {
+    return this.http.post(`${this.endpoints.backend}/update_model`, { model: userModel }, { headers: { "Authorization": this.getSessionId() } })
+  }
+
+  public registerUser(userObject: any) {
+    return this.http.post(`${this.endpoints.backend}/register`, userObject)
+  }
+
+  public updateItemRating(data: any) {
+    return this.http.post(`${this.endpoints.backend}/rate`, data)
+  }
+
   public storeUser(userObject: any) {
     this.isUserLoggedIn = true;
     localStorage.setItem('user', JSON.stringify(userObject))
+  }
+
+  public removeUser() {
+    localStorage.clear();
   }
 
   public getLoginStatus() {
@@ -118,6 +154,19 @@ export class NetworkService {
       return this.isUserLoggedIn
     }
     return false;
+  }
+
+  public logUserOut() {
+    return this.http.post(`${this.endpoints.backend}/logout`, {}, {
+      headers: {
+        'Authorization': this.getSessionId()
+      }
+    })
+  }
+
+  public onLogout() {
+    localStorage.clear()
+    this.loginStatus.next(false);
   }
 
   public getUser() {
