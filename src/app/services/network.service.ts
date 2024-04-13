@@ -12,6 +12,7 @@ export class NetworkService {
     tmdb: 'https://api.themoviedb.org/3/',
     tmdbImage: 'http://image.tmdb.org/t/p/',
     rawg: 'https://api.rawg.io/api/',
+    backend: ' https://hadesapi.iocky.com/'
   }
 
   private getTmdbHeaders() {
@@ -25,6 +26,30 @@ export class NetworkService {
   constructor(private http: HttpClient) { }
 
   loginStatus = new Subject<boolean>();
+
+  public getSessionId() {
+    let user = this.getUser()
+    if (user) {
+      return user.session_id
+    }
+  }
+
+  public getItemType(type_string: string) {
+    switch (type_string) {
+      case 'tmdb_movie':
+        return 'm'
+      case 'tmdb_tv':
+        return 't'
+      case 'rawg':
+        return 'g'
+      default:
+        return ''
+    }
+  }
+
+  public getRequestHeaders() {
+    return new Headers().set('Authorization', this.getSessionId())
+  }
 
   // hard coded
   public getTmdbConfig() {
@@ -106,9 +131,71 @@ export class NetworkService {
     this.loginStatus.next(userLogin)
   }
 
+  public logUserIn(userObject: any) {
+    return this.http.post(`${this.endpoints.backend}/login`, userObject)
+  }
+
+  public getUserModel() {
+    return this.http.get(`${this.endpoints.backend}/get_model`, { headers: { "Authorization": this.getSessionId() } })
+  }
+
+  public postModel(userModel: any) {
+    return this.http.post(`${this.endpoints.backend}/update_model`, { model: userModel }, { headers: { "Authorization": this.getSessionId() } })
+  }
+
+  public registerUser(userObject: any) {
+    return this.http.post(`${this.endpoints.backend}/register`, userObject)
+  }
+
+  public updateItemRating(data: any) {
+    return this.http.post(`${this.endpoints.backend}/rate`, data, { headers: { "Authorization": this.getSessionId() } })
+  }
+
+  public getRatings(type: string) {
+    return this.http.get(`${this.endpoints.backend}/ratings?type=${type}`, { headers: { "Authorization": this.getSessionId() } })
+  }
+
+  public getSimilarMovies(id: any) {
+    return this.http.get(`${this.endpoints.tmdb}/movie/${id}/similar`, { headers: this.getTmdbHeaders() })
+  }
+
+  public getSimilarTv(id: any) {
+    return this.http.get(`${this.endpoints.tmdb}/tv/${id}/similar`, { headers: this.getTmdbHeaders() })
+  }
+
+  public updateWishlist(data: any) {
+    return this.http.post(`${this.endpoints.backend}/add_to_wishlist`, data, { headers: { "Authorization": this.getSessionId() } })
+  }
+
+  public removeFromWishlist(type: string, item_id: string) {
+    return this.http.delete(`${this.endpoints.backend}/remove_from_wishlist`, {
+      params: {
+        type,
+        item_id
+      },
+      headers: { "Authorization": this.getSessionId() },
+    })
+  }
+
+  public checkItemForWishlist(data: any) {
+    return this.http.post(`${this.endpoints.backend}/check_wishlist`, data, { headers: { "Authorization": this.getSessionId() } })
+  }
+
+  public getUserWishList() {
+    return this.http.get(`${this.endpoints.backend}/get_wishlist`, { headers: { "Authorization": this.getSessionId() } })
+  }
+
+  public getreccs(type: string) {
+    return this.http.get(`${this.endpoints.backend}/recommend?type=${type}&num_re=${20}`, { headers: { "Authorization": this.getSessionId() } })
+  }
+
   public storeUser(userObject: any) {
     this.isUserLoggedIn = true;
     localStorage.setItem('user', JSON.stringify(userObject))
+  }
+
+  public removeUser() {
+    localStorage.clear();
   }
 
   public getLoginStatus() {
@@ -118,6 +205,19 @@ export class NetworkService {
       return this.isUserLoggedIn
     }
     return false;
+  }
+
+  public logUserOut() {
+    return this.http.post(`${this.endpoints.backend} / logout`, {}, {
+      headers: {
+        'Authorization': this.getSessionId()
+      }
+    })
+  }
+
+  public onLogout() {
+    localStorage.clear()
+    this.loginStatus.next(false);
   }
 
   public getUser() {

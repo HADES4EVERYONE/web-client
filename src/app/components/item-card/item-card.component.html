@@ -1,10 +1,6 @@
 <ng-template [ngIf]="options.type === 'tmdb_movie'">
-    <div class="relative bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700" style="width:185px">
-        <button *ngIf="isLoggedIn" (click)="addToWishlist(item)" class="absolute top-2 right-2 text-white bg-blue-700 bg-opacity-25 hover:bg-opacity-100 rounded-full p-2 transition-opacity duration-200">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
-            </svg>
-        </button>
+    <div class="relative bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
+        style="width:154px">
         <a href="#">
             <img class="rounded-t-lg" [src]="getImage(item.poster_path)" alt="" />
         </a>
@@ -27,12 +23,8 @@
 </ng-template>
 
 <ng-template [ngIf]="options.type === 'tmdb_tv'">
-    <div class="relative bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700" style="width:185px">
-        <button *ngIf="isLoggedIn" (click)="addToWishlist(item)" class="absolute top-2 right-2 text-white bg-blue-700 bg-opacity-25 hover:bg-opacity-100 rounded-full p-2 transition-opacity duration-200">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
-            </svg>
-        </button>
+    <div class="relative bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
+        style="width:154px">
         <a href="#">
             <img class="rounded-t-lg" [src]="getImage(item.poster_path)" alt="" />
         </a>
@@ -55,16 +47,10 @@
 </ng-template>
 
 <ng-template [ngIf]="options.type==='rawg'">
-    <div class="relative bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700" style="width:185px">
-        <button *ngIf="isLoggedIn" (click)="addToWishlist(item)" class="absolute top-2 right-2 text-white bg-blue-700 bg-opacity-25 hover:bg-opacity-100 rounded-full p-2 transition-opacity duration-200">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
-            </svg>
-        </button>
-    <div class="bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
-        style="width:185px">
+    <div class="relative bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
+        style="width:180px;">
         <a href="#">
-            <img class="rounded-t-lg" [src]="item.background_image" alt="" />
+            <img class="rounded-t-lg max-h-28" [src]="item.background_image" alt="" />
         </a>
         <div class="p-5">
             <a href="#">

@@ -1,11 +1,22 @@
-<div class="m-2">
+<div class="m-2" *ngIf="isModelAdded">
     <section>
         <div class="p-2 w-full items-center">
-            <h4 class="text-xl dark:text-white">Recommended</h4>
+            <h4 class="text-2xl dark:text-white">We think you May like..</h4>
+            <div class="mb-2">
+                <app-card-row [items]="calcReccs" [options]="{title: '', type: 'tmdb_movie'}"></app-card-row>
+            </div>
             <div class="mb-2" *ngFor="let genreRecc of genreReccs">
                 <app-card-row [items]="genreRecc.results"
                     [options]="{title: genreRecc.genre, type: 'tmdb_movie'}"></app-card-row>
             </div>
         </div>
+    </section>
+</div>
+
+<div class="m-2" *ngIf="!isModelAdded">
+    <section>
+        <p class="text-xl"> Please select some genres from <a [routerLink]="['/user-genres']"
+                class="text-blue-700">here,</a> so we can make
+            some good recommendations! </p>
     </section>
 </div>

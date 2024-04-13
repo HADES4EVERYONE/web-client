@@ -33,7 +33,10 @@ export class HeaderComponent implements OnInit {
   }
 
   logout(): void {
-    console.log('logout')
-    this.router.navigate(['home'])
+    this.__network.logUserOut().subscribe((res: any) => {
+      this.__network.onLogout();
+      this.router.navigate([''])
+    })
+
   }
 }
