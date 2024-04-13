@@ -34,6 +34,19 @@ export class NetworkService {
     }
   }
 
+  public getItemType(type_string: string) {
+    switch (type_string) {
+      case 'tmdb_movie':
+        return 'm'
+      case 'tmdb_tv':
+        return 't'
+      case 'rawg':
+        return 'g'
+      default:
+        return ''
+    }
+  }
+
   public getRequestHeaders() {
     return new Headers().set('Authorization', this.getSessionId())
   }
@@ -135,7 +148,11 @@ export class NetworkService {
   }
 
   public updateItemRating(data: any) {
-    return this.http.post(`${this.endpoints.backend}/rate`, data)
+    return this.http.post(`${this.endpoints.backend}/rate`, data, { headers: { "Authorization": this.getSessionId() } })
+  }
+
+  public getRatings(type: string) {
+    return this.http.get(`${this.endpoints.backend}/ratings?type=${type}`, { headers: { "Authorization": this.getSessionId() } })
   }
 
   public storeUser(userObject: any) {

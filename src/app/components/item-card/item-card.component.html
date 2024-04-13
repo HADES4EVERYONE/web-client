@@ -62,7 +62,7 @@
 
 <ng-template [ngIf]="options.type==='rawg'">
     <div class="relative bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
-        style="width:145px;">
+        style="width:180px;">
         <button *ngIf="isLoggedIn" (click)="addToWishlist(item)"
             class="absolute top-2 right-2 text-white bg-blue-700 bg-opacity-25 hover:bg-opacity-100 rounded-full p-2 transition-opacity duration-200">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
@@ -71,7 +71,7 @@
             </svg>
         </button>
         <a href="#">
-            <img class="rounded-t-lg max-h-20" [src]="item.background_image" alt="" />
+            <img class="rounded-t-lg max-h-28" [src]="item.background_image" alt="" />
         </a>
         <div class="p-5">
             <a href="#">
