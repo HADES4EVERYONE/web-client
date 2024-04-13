@@ -170,10 +170,10 @@ export class NetworkService {
   public removeFromWishlist(type: string, item_id: string) {
     return this.http.delete(`${this.endpoints.backend}/remove_from_wishlist`, {
       params: {
-        type
+        type,
+        item_id
       },
       headers: { "Authorization": this.getSessionId() },
-      body: { item_id }
     })
   }
 
