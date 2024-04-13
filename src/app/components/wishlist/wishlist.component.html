@@ -1,4 +1,4 @@
-<div class="container mx-auto max-w-4xl px-4 m-2">
+<!-- <div class="container mx-auto max-w-4xl px-4 m-2">
   <div class="wishlist-section">
     <h2 class="text-2xl font-semibold mb-2">My Wishlist</h2>
     <div class="flex flex-col items-center">
@@ -6,22 +6,34 @@
         <div>
           <h3 class="text-md font-semibold mb-1">Movies</h3>
           <ul id="wishlistMovies">
-            <li *ngFor="let movie of wishlistMovies">{{ movie.title }}</li>
+            <li *ngFor="let movie of wishlistMovies">{{ movie.name }}</li>
           </ul>
         </div>
         <div>
           <h3 class="text-md font-semibold mb-1">TV Shows</h3>
           <ul id="wishlistTVShows">
-            <li *ngFor="let TVshow of wishlistTVShows">{{ TVshow.title }}</li>
+            <li *ngFor="let TVshow of wishlistTVShows">{{ TVshow.name }}</li>
           </ul>
         </div>
         <div>
           <h3 class="text-md font-semibold mb-1">Games</h3>
           <ul id="wishlistGames">
-            <li *ngFor="let game of wishlistGames">{{ game.title }}</li>
+            <li *ngFor="let game of wishlistGames">{{ game.name }}</li>
           </ul>
         </div>
       </div>
     </div>
 
-  </div>
+</div> -->
+<div class="w-full items-center m-2">
+  <h4 class="text-2xl dark:text-white">Your wishlist</h4>
+</div>
+<div class="m-2">
+  <app-card-row [items]="wishlistMovies" [options]="{title: 'Movies', type: 'tmdb_movie'}"></app-card-row>
+</div>
+<div class="m-2">
+  <app-card-row [items]="wishlistTVShows" [options]="{title: 'TV Shows', type: 'tmdb_tv'}"></app-card-row>
+</div>
+<div class="m-2">
+  <app-card-row [items]="wishlistGames" [options]="{title: 'Games', type: 'rawg'}"></app-card-row>
+</div>
