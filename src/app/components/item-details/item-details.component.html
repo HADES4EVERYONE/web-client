@@ -5,6 +5,25 @@
         </div>
         <div class="flex justify-between p-2 w-full items-center">
             <h4 class="text-4xl font-extrabold dark:text-white">{{itemDetails.title || itemDetails.name}}</h4>
+            <button *ngIf="isLoggedIn" (click)="addItemToWishlist()"
+                class=" text-white bg-opacity-25 hover:bg-opacity-100 rounded-full p-2 transition-opacity duration-200">
+                <ng-template [ngIf]="!isWishlisted">
+                    <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="m17 21-5-4-5 4V3.889a.92.92 0 0 1 .244-.629.808.808 0 0 1 .59-.26h8.333a.81.81 0 0 1 .589.26.92.92 0 0 1 .244.63V21Z" />
+                    </svg>
+                </ng-template>
+                <ng-template [ngIf]="isWishlisted">
+                    <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                        viewBox="0 0 24 24">
+                        <path
+                            d="M7.833 2c-.507 0-.98.216-1.318.576A1.92 1.92 0 0 0 6 3.89V21a1 1 0 0 0 1.625.78L12 18.28l4.375 3.5A1 1 0 0 0 18 21V3.889c0-.481-.178-.954-.515-1.313A1.808 1.808 0 0 0 16.167 2H7.833Z" />
+                    </svg>
+                </ng-template>
+
+            </button>
         </div>
         <div class="p-2">
             <p class="mb-3 text-gray-500 dark:text-gray-400">{{itemDetails.overview || itemDetails.description_raw}}
@@ -25,6 +44,15 @@
                     class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-small rounded-lg text-sm px-3 py-1.5 me-2 mb-2 mt-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
                     style="margin-left: 5px;" (click)="saveRating()">Save</button>
                 <p class="mt-2 text-sm text-green-600 dark:text-green-500">{{successMessage}}</p>
+            </div>
+        </div>
+    </div>
+</section>
+<section *ngIf="isSimilarAvailable">
+    <div class="m-2">
+        <div class="p-2 w-full items-center">
+            <div class="mb-2">
+                <app-card-row [items]="similar" [options]="{title: 'Simiar' , type: 'tmdb_movie'}"></app-card-row>
             </div>
         </div>
     </div>

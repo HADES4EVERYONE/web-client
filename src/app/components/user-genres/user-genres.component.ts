@@ -44,80 +44,150 @@ export class UserGenresComponent implements OnInit {
     let user = this.__network.getUser();
     let userSelectedGenres: any = []
 
-    if (user && user.model && user.model.genres) {
-      userSelectedGenres = user.model.genres;
-    }
+    // if (user && user.model && user.model.genres) {
+    //   userSelectedGenres = user.model.genres;
+    // }
 
     this.__network.getUserModel().subscribe((res: any) => {
-      userSelectedGenres = res.data.genres
+      if (res.data) {
+        userSelectedGenres = res.data.genres
+      }
+
+
+      this.__network.getAllGenres().subscribe((res: any) => {
+        if (!userSelectedGenres.length) {
+          this.allGenres.movieGenres = res[0].genres.map((g: any) => {
+            return { ...g, isSelected: false, type: 'm', weight: 0 }
+          });
+          this.allGenres.tvGenres = res[1].genres.map((g: any) => { return { ...g, isSelected: false, type: 't', weight: 0 } });
+          this.allGenres.gameGenres = res[2].results.map((g: any) => { return { ...g, isSelected: false, type: 'g', weight: 0 } })
+        } else {
+          let mGenres = userSelectedGenres.filter((mg: any) => mg.type === 'm')
+          let tvGenres = userSelectedGenres.filter((tg: any) => tg.type === 't')
+          let gGenres = userSelectedGenres.filter((gg: any) => gg.type === 'g')
+
+          this.allGenres.movieGenres = res[0].genres.map((g: any) => {
+            let isStored = false;
+            let storedRes = {}
+            mGenres.forEach((ug: any) => {
+              if (g.id === ug.id) {
+                isStored = true
+                storedRes = { ...ug, isSelected: true }
+              }
+            })
+            if (isStored) {
+              return {
+                ...storedRes
+              }
+            }
+            return { ...g, isSelected: mGenres.includes(g.id), type: 'm', weight: 0 }
+          });
+
+
+          this.allGenres.tvGenres = res[1].genres.map((g: any) => {
+            let isStored = false;
+            let storedRes = {}
+            tvGenres.forEach((ug: any) => {
+              if (g.id === ug.id) {
+                isStored = true
+                storedRes = { ...ug }
+              }
+            })
+            if (isStored) {
+              return {
+                ...storedRes,
+                isSelected: true
+              }
+            }
+            return { ...g, isSelected: tvGenres.includes(g.id), type: 't', weight: 0 }
+          });
+          this.allGenres.gameGenres = res[2].results.map((g: any) => {
+            let isStored = false;
+            let storedRes = {}
+            gGenres.forEach((ug: any) => {
+              if (g.id === ug.id) {
+                isStored = true
+                storedRes = { ...ug }
+              }
+            })
+            if (isStored) {
+              return {
+                ...storedRes,
+                isSelected: true
+              }
+            }
+            return { ...g, isSelected: gGenres.includes(g.id), type: 'g', weight: 0 }
+          })
+        };
+      })
     })
 
-    this.genreSubscription = this.__network.getAllGenres().subscribe((res: any) => {
-      if (!userSelectedGenres.length) {
-        this.allGenres.movieGenres = res[0].genres.map((g: any) => {
-          return { ...g, isSelected: false, type: 'm', weight: 0 }
-        });
-        this.allGenres.tvGenres = res[1].genres.map((g: any) => { return { ...g, isSelected: false, type: 't', weight: 0 } });
-        this.allGenres.gameGenres = res[2].results.map((g: any) => { return { ...g, isSelected: false, type: 'g', weight: 0 } })
-      } else {
-        let mGenres = userSelectedGenres.filter((mg: any) => mg.type === 'm')
-        let tvGenres = userSelectedGenres.filter((tg: any) => tg.type === 't')
-        let gGenres = userSelectedGenres.filter((gg: any) => gg.type === 'g')
+    // this.genreSubscription = this.__network.getAllGenres().subscribe((res: any) => {
+    //   if (!userSelectedGenres.length) {
+    //     this.allGenres.movieGenres = res[0].genres.map((g: any) => {
+    //       return { ...g, isSelected: false, type: 'm', weight: 0 }
+    //     });
+    //     this.allGenres.tvGenres = res[1].genres.map((g: any) => { return { ...g, isSelected: false, type: 't', weight: 0 } });
+    //     this.allGenres.gameGenres = res[2].results.map((g: any) => { return { ...g, isSelected: false, type: 'g', weight: 0 } })
+    //   } else {
+    //     let mGenres = userSelectedGenres.filter((mg: any) => mg.type === 'm')
+    //     let tvGenres = userSelectedGenres.filter((tg: any) => tg.type === 't')
+    //     let gGenres = userSelectedGenres.filter((gg: any) => gg.type === 'g')
 
-        this.allGenres.movieGenres = res[0].genres.map((g: any) => {
-          let isStored = false;
-          let storedRes = {}
-          mGenres.forEach((ug: any) => {
-            if (g.id === ug.id) {
-              isStored = true
-              storedRes = { ...ug, isSelected: true }
-            }
-          })
-          if (isStored) {
-            return {
-              ...storedRes
-            }
-          }
-          return { ...g, isSelected: mGenres.includes(g.id), type: 'm', weight: 0 }
-        });
+    //     this.allGenres.movieGenres = res[0].genres.map((g: any) => {
+    //       let isStored = false;
+    //       let storedRes = {}
+    //       mGenres.forEach((ug: any) => {
+    //         if (g.id === ug.id) {
+    //           isStored = true
+    //           storedRes = { ...ug, isSelected: true }
+    //         }
+    //       })
+    //       if (isStored) {
+    //         return {
+    //           ...storedRes
+    //         }
+    //       }
+    //       return { ...g, isSelected: mGenres.includes(g.id), type: 'm', weight: 0 }
+    //     });
 
 
-        this.allGenres.tvGenres = res[1].genres.map((g: any) => {
-          let isStored = false;
-          let storedRes = {}
-          tvGenres.forEach((ug: any) => {
-            if (g.id === ug.id) {
-              isStored = true
-              storedRes = { ...ug }
-            }
-          })
-          if (isStored) {
-            return {
-              ...storedRes,
-              isSelected: true
-            }
-          }
-          return { ...g, isSelected: tvGenres.includes(g.id), type: 't', weight: 0 }
-        });
-        this.allGenres.gameGenres = res[2].results.map((g: any) => {
-          let isStored = false;
-          let storedRes = {}
-          gGenres.forEach((ug: any) => {
-            if (g.id === ug.id) {
-              isStored = true
-              storedRes = { ...ug }
-            }
-          })
-          if (isStored) {
-            return {
-              ...storedRes,
-              isSelected: true
-            }
-          }
-          return { ...g, isSelected: gGenres.includes(g.id), type: 'g', weight: 0 }
-        })
-      };
-    })
+    //     this.allGenres.tvGenres = res[1].genres.map((g: any) => {
+    //       let isStored = false;
+    //       let storedRes = {}
+    //       tvGenres.forEach((ug: any) => {
+    //         if (g.id === ug.id) {
+    //           isStored = true
+    //           storedRes = { ...ug }
+    //         }
+    //       })
+    //       if (isStored) {
+    //         return {
+    //           ...storedRes,
+    //           isSelected: true
+    //         }
+    //       }
+    //       return { ...g, isSelected: tvGenres.includes(g.id), type: 't', weight: 0 }
+    //     });
+    //     this.allGenres.gameGenres = res[2].results.map((g: any) => {
+    //       let isStored = false;
+    //       let storedRes = {}
+    //       gGenres.forEach((ug: any) => {
+    //         if (g.id === ug.id) {
+    //           isStored = true
+    //           storedRes = { ...ug }
+    //         }
+    //       })
+    //       if (isStored) {
+    //         return {
+    //           ...storedRes,
+    //           isSelected: true
+    //         }
+    //       }
+    //       return { ...g, isSelected: gGenres.includes(g.id), type: 'g', weight: 0 }
+    //     })
+    //   };
+    // })
   }
 
   showErrMessage(err: string) {

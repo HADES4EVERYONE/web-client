@@ -12,7 +12,7 @@ export class NetworkService {
     tmdb: 'https://api.themoviedb.org/3/',
     tmdbImage: 'http://image.tmdb.org/t/p/',
     rawg: 'https://api.rawg.io/api/',
-    backend: 'http://127.0.0.1:5000'
+    backend: 'http://127.0.0.1:14138'
   }
 
   private getTmdbHeaders() {
@@ -155,6 +155,40 @@ export class NetworkService {
     return this.http.get(`${this.endpoints.backend}/ratings?type=${type}`, { headers: { "Authorization": this.getSessionId() } })
   }
 
+  public getSimilarMovies(id: any) {
+    return this.http.get(`${this.endpoints.tmdb}/movie/${id}/similar`, { headers: this.getTmdbHeaders() })
+  }
+
+  public getSimilarTv(id: any) {
+    return this.http.get(`${this.endpoints.tmdb}/tv/${id}/similar`, { headers: this.getTmdbHeaders() })
+  }
+
+  public updateWishlist(data: any) {
+    return this.http.post(`${this.endpoints.backend}/add_to_wishlist`, data, { headers: { "Authorization": this.getSessionId() } })
+  }
+
+  public removeFromWishlist(type: string, item_id: string) {
+    return this.http.delete(`${this.endpoints.backend}/remove_from_wishlist`, {
+      params: {
+        type
+      },
+      headers: { "Authorization": this.getSessionId() },
+      body: { item_id }
+    })
+  }
+
+  public checkItemForWishlist(data: any) {
+    return this.http.post(`${this.endpoints.backend}/check_wishlist`, data, { headers: { "Authorization": this.getSessionId() } })
+  }
+
+  public getUserWishList() {
+    return this.http.get(`${this.endpoints.backend}/get_wishlist`, { headers: { "Authorization": this.getSessionId() } })
+  }
+
+  public getreccs(type: string) {
+    return this.http.get(`${this.endpoints.backend}/recommend?type=${type}&num_re=${20}`, { headers: { "Authorization": this.getSessionId() } })
+  }
+
   public storeUser(userObject: any) {
     this.isUserLoggedIn = true;
     localStorage.setItem('user', JSON.stringify(userObject))
@@ -174,7 +208,7 @@ export class NetworkService {
   }
 
   public logUserOut() {
-    return this.http.post(`${this.endpoints.backend}/logout`, {}, {
+    return this.http.post(`${this.endpoints.backend} / logout`, {}, {
       headers: {
         'Authorization': this.getSessionId()
       }

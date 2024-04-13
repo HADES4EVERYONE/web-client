@@ -16,6 +16,7 @@ export class GameComponent implements OnInit {
 
   public isModelAdded = true;
   public genreReccs: any = []
+  public calcReccs: any = [];
   public isObjectPopulated = false
 
   sortByWeight(g_1: any, g_2: any) {
@@ -54,6 +55,25 @@ export class GameComponent implements OnInit {
         }
       } else {
         this.isModelAdded = false
+      }
+    })
+
+    this.data.getreccs('g').subscribe((res: any) => {
+      let reqObj: any = {}
+      let weightMap: any = {};
+      if (res.data) {
+        res.data.forEach((d: any) => {
+          reqObj[d[0]] = this.data.getGameDetails(d[0])
+          weightMap[d[0]] = d[1];
+        })
+
+        this.data.getParallelData(reqObj).subscribe((res: any) => {
+          Object.keys(res).forEach(d => {
+            this.calcReccs.push({ ...res[d], weight: weightMap[d] })
+          })
+
+          this.calcReccs.sort(this.sortByWeight)
+        })
       }
     })
   }

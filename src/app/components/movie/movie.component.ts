@@ -17,7 +17,9 @@ export class MovieComponent implements OnInit {
 
   public isModelAdded = true;
   public genreReccs: any = []
-  public isObjectPopulated = false
+  public isObjectPopulated = false;
+
+  public calcReccs: any = [];
 
   sortByWeight(g_1: any, g_2: any) {
     return g_2.weight - g_1.weight
@@ -52,6 +54,25 @@ export class MovieComponent implements OnInit {
         }
       } else {
         this.isModelAdded = false
+      }
+    })
+
+    this.data.getreccs('m').subscribe((res: any) => {
+      let reqObj: any = {}
+      let weightMap: any = {};
+      if (res.data) {
+        res.data.forEach((d: any) => {
+          reqObj[d[0]] = this.data.getMovieDetails(d[0])
+          weightMap[d[0]] = d[1];
+        })
+
+        this.data.getParallelData(reqObj).subscribe((res: any) => {
+          Object.keys(res).forEach(d => {
+            this.calcReccs.push({ ...res[d], weight: weightMap[d] })
+          })
+
+          this.calcReccs.sort(this.sortByWeight)
+        })
       }
     })
   }

@@ -1,7 +1,10 @@
 <div class="m-2" *ngIf="isModelAdded">
     <section>
         <div class="w-full items-center">
-            <h4 class="text-xl dark:text-white">Recommended</h4>
+            <h4 class="text-2xl dark:text-white">We think you May like..</h4>
+            <div class="mb-2">
+                <app-card-row [items]="calcReccs" [options]="{title: '', type: 'rawg'}"></app-card-row>
+            </div>
             <div class="" *ngFor="let genreRecc of genreReccs">
                 <app-card-row [items]="genreRecc.results"
                     [options]="{title: genreRecc.genre, type: 'rawg'}"></app-card-row>

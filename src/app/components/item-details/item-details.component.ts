@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { NetworkService } from '../../services/network.service';
 import { CommonModule } from '@angular/common';
+import { CardRowComponent } from '../card-row/card-row.component';
 
 @Component({
   selector: 'app-item-details',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, CardRowComponent],
   templateUrl: './item-details.component.html',
   styleUrl: './item-details.component.scss',
   providers: []
@@ -16,6 +17,11 @@ export class ItemDetailsComponent implements OnInit {
   public itemDetails: any = {};
 
   public isLoggedIn = false;
+
+  public isWishlisted = false;
+
+  public similar: any = [];
+  public isSimilarAvailable = false
 
   public totalRating = 0;
 
@@ -55,6 +61,11 @@ export class ItemDetailsComponent implements OnInit {
         case 'tmdb_movie':
           this.__network.getMovieDetails(res.id).subscribe(res => {
             this.itemDetails = res
+            this.checkWishList({
+              item_id: this.resId,
+              type: this.__network.getItemType(this.resType),
+              name: this.itemDetails.name || this.itemDetails.title
+            })
           })
 
           break;
@@ -62,14 +73,40 @@ export class ItemDetailsComponent implements OnInit {
         case 'tmdb_tv':
           this.__network.getTvDetails(res.id).subscribe(res => {
             this.itemDetails = res
+            this.checkWishList({
+              item_id: this.resId,
+              type: this.__network.getItemType(this.resType),
+              name: this.itemDetails.name || this.itemDetails.title
+            })
           })
           break;
 
         case 'rawg':
           this.__network.getGameDetails(res.id).subscribe(res => {
             this.itemDetails = res
+            this.checkWishList({
+              item_id: this.resId,
+              type: this.__network.getItemType(this.resType),
+              name: this.itemDetails.name || this.itemDetails.title
+            })
           })
           break;
+      }
+    })
+
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.itemDetails = {}
+        this.totalRating = 0;
+        this.isWishlisted = false
+        this.ngOnInit();
+        setTimeout(() => {
+          window.scroll({
+            top: 0,
+            left: 0,
+            behavior: 'smooth'
+          });
+        })
       }
     })
   }
@@ -88,6 +125,14 @@ export class ItemDetailsComponent implements OnInit {
     }
   }
 
+  checkWishList(data: any) {
+    this.__network.checkItemForWishlist(data).subscribe((res: any) => {
+      if (res.message = "Check completed.") {
+        this.isWishlisted = res.in_wishlist
+      }
+    })
+  }
+
   ngOnInit(): void {
     let user = this.__network.getUser();
     if (user) {
@@ -103,6 +148,25 @@ export class ItemDetailsComponent implements OnInit {
         })
       }
     })
+
+
+
+    if (this.resType === 'tmdb_movie') {
+      this.__network.getSimilarMovies(this.resId).subscribe((res: any) => {
+        if (res.results.length) {
+          this.similar = res.results
+          this.isSimilarAvailable = true
+        }
+      })
+    } else if (this.resType === 'tmdb_tv') {
+      this.__network.getSimilarMovies(this.resId).subscribe((res: any) => {
+        if (res.results.length) {
+          this.similar = res.results
+          this.isSimilarAvailable = true
+        }
+      })
+    }
+
   }
 
   showSuccess(message: string) {
@@ -130,6 +194,26 @@ export class ItemDetailsComponent implements OnInit {
         if (res.message === 'Rating recorded successfully.') {
           this.showSuccess(res.message);
         }
+      })
+    }
+  }
+
+  addItemToWishlist() {
+    if (!this.isLoggedIn) {
+      this.router.navigate(['auth'])
+    } else if (!this.isWishlisted) {
+      this.__network.updateWishlist({
+        item_id: this.itemDetails.id,
+        type: this.__network.getItemType(this.resType),
+        name: this.itemDetails.name || this.itemDetails.title
+      }).subscribe((res: any) => {
+        if (res.message == 'wishlist updated successfully.') {
+          this.isWishlisted = true
+        }
+      })
+    } else if (this.isWishlisted) {
+      this.__network.removeFromWishlist(this.__network.getItemType(this.resType), this.resId).subscribe(res => {
+        this.isWishlisted = false
       })
     }
   }
