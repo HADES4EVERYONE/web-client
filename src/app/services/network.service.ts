@@ -126,6 +126,26 @@ export class NetworkService {
     return this.http.get(`${this.endpoints.tmdb}discover/tv?page=1&sort_by=popularity.desc`, { headers: this.getTmdbHeaders() })
   }
 
+  public searchMovies(searchTerm: string) {
+    return this.http.get(`${this.endpoints.tmdb}search/movie?query=${searchTerm}`, { headers: this.getTmdbHeaders() })
+  }
+
+  public searchTv(searchTerm: string) {
+    return this.http.get(`${this.endpoints.tmdb}search/tv?query=${searchTerm}`, { headers: this.getTmdbHeaders() })
+  }
+
+  public searchGames(searchTerm: string) {
+    return this.http.get(`${this.endpoints.rawg}games?key=${creds.RAWG.key}&search=${searchTerm}`)
+  }
+
+  public getParallelSearch(searchTerm: string) {
+    return forkJoin([
+      this.searchMovies(searchTerm),
+      this.searchTv(searchTerm),
+      this.searchGames(searchTerm)
+    ])
+  }
+
   public checkLoginStatus() {
     let userLogin = this.getLoginStatus()
     this.loginStatus.next(userLogin)
