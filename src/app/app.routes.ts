@@ -9,6 +9,7 @@ import { UserGenresComponent } from './components/user-genres/user-genres.compon
 import { WishlistComponent } from './components/wishlist/wishlist.component';
 import { authGuard } from './services/auth.guard';
 import { ItemDetailsComponent } from './components/item-details/item-details.component';
+import { SearchComponent } from './components/search/search.component';
 
 export const routes: Routes = [
     {
@@ -26,8 +27,8 @@ export const routes: Routes = [
         path: 'games',
         component: GameComponent
     }, {
-        path: 'books',
-        component: BookComponent
+        path: 'search',
+        component: SearchComponent
     }, {
         path: 'auth',
         component: AuthComponent
