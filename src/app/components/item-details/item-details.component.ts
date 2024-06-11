@@ -54,45 +54,7 @@ export class ItemDetailsComponent implements OnInit {
   public resId: string = '';
 
   constructor(private activatedRoute: ActivatedRoute, private __network: NetworkService, private router: Router) {
-    this.activatedRoute.params.subscribe((res: any) => {
-      this.resType = res.type;
-      this.resId = res.id;
-      switch (res.type) {
-        case 'tmdb_movie':
-          this.__network.getMovieDetails(res.id).subscribe(res => {
-            this.itemDetails = res
-            this.checkWishList({
-              item_id: this.resId,
-              type: this.__network.getItemType(this.resType),
-              name: this.itemDetails.name || this.itemDetails.title
-            })
-          })
 
-          break;
-
-        case 'tmdb_tv':
-          this.__network.getTvDetails(res.id).subscribe(res => {
-            this.itemDetails = res
-            this.checkWishList({
-              item_id: this.resId,
-              type: this.__network.getItemType(this.resType),
-              name: this.itemDetails.name || this.itemDetails.title
-            })
-          })
-          break;
-
-        case 'rawg':
-          this.__network.getGameDetails(res.id).subscribe(res => {
-            this.itemDetails = res
-            this.checkWishList({
-              item_id: this.resId,
-              type: this.__network.getItemType(this.resType),
-              name: this.itemDetails.name || this.itemDetails.title
-            })
-          })
-          break;
-      }
-    })
 
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
@@ -139,16 +101,66 @@ export class ItemDetailsComponent implements OnInit {
       this.isLoggedIn = true;
     }
 
-    this.__network.getRatings(this.__network.getItemType(this.resType)).subscribe((res: any) => {
-      if (res.message === 'Ratings retrieved successfully.') {
-        res.data.forEach((item: any) => {
-          if (item.item_id == this.resId) {
-            this.addRating(item.rating)
-          }
-        })
+    this.activatedRoute.params.subscribe((res: any) => {
+      this.resType = res.type;
+      this.resId = res.id;
+      if (this.isLoggedIn) {
+
+      }
+      switch (res.type) {
+        case 'tmdb_movie':
+          this.__network.getMovieDetails(res.id).subscribe(res => {
+            this.itemDetails = res;
+            if (this.isLoggedIn) {
+              this.checkWishList({
+                item_id: this.resId,
+                type: this.__network.getItemType(this.resType),
+                name: this.itemDetails.name || this.itemDetails.title
+              })
+            }
+          })
+
+          break;
+
+        case 'tmdb_tv':
+          this.__network.getTvDetails(res.id).subscribe(res => {
+            this.itemDetails = res;
+            if (this.isLoggedIn) {
+              this.checkWishList({
+                item_id: this.resId,
+                type: this.__network.getItemType(this.resType),
+                name: this.itemDetails.name || this.itemDetails.title
+              })
+            }
+          })
+          break;
+
+        case 'rawg':
+          this.__network.getGameDetails(res.id).subscribe(res => {
+            this.itemDetails = res;
+            if (this.isLoggedIn) {
+              this.checkWishList({
+                item_id: this.resId,
+                type: this.__network.getItemType(this.resType),
+                name: this.itemDetails.name || this.itemDetails.title
+              })
+            }
+          })
+          break;
       }
     })
 
+    if (this.isLoggedIn) {
+      this.__network.getRatings(this.__network.getItemType(this.resType)).subscribe((res: any) => {
+        if (res.message === 'Ratings retrieved successfully.') {
+          res.data.forEach((item: any) => {
+            if (item.item_id == this.resId) {
+              this.addRating(item.rating)
+            }
+          })
+        }
+      })
+    }
 
 
     if (this.resType === 'tmdb_movie') {
