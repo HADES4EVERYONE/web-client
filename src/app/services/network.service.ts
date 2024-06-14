@@ -12,7 +12,7 @@ export class NetworkService {
     tmdb: 'https://api.themoviedb.org/3/',
     tmdbImage: 'http://image.tmdb.org/t/p/',
     rawg: 'https://api.rawg.io/api/',
-    backend: ' https://hadesapi.iocky.com/'
+    backend: 'https://hadesapi.iocky.com/'
   }
 
   private getTmdbHeaders() {
@@ -57,11 +57,13 @@ export class NetworkService {
   }
 
   public getMovieGenres() {
-    return this.http.get(`${this.endpoints.tmdb}genre/movie/list?language=en`, { headers: this.getTmdbHeaders() })
+    // return this.http.get(`${this.endpoints.tmdb}genre/movie/list?language=en`, { headers: this.getTmdbHeaders() })
+    return this.http.get(`${this.endpoints.backend}genres`)
   }
 
   public getMovieDetails(movieId: string) {
-    return this.http.get(`${this.endpoints.tmdb}movie/${movieId}`, { headers: this.getTmdbHeaders() })
+    // return this.http.get(`${this.endpoints.tmdb}movie/${movieId}`, { headers: this.getTmdbHeaders() })
+    return this.http.get(`${this.endpoints.backend}movie/details?item_id=${movieId}`)
   }
 
   public getTvGenres() {
