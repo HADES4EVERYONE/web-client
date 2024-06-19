@@ -13,7 +13,7 @@ export class NetworkService {
     tmdbImage: 'http://image.tmdb.org/t/p/',
     rawg: 'https://api.rawg.io/api/',
     backend: 'https://hadesapi.iocky.com/',
-    local: 'http://127.0.0.1:14138/'
+    local: 'https://hades-api.onrender.com/'
   }
 
   private getTmdbHeaders() {
