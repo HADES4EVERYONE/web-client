@@ -1,6 +1,5 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { creds } from '../../creds'
 import { BehaviorSubject, Observable, Subject, forkJoin, map } from 'rxjs';
 
 @Injectable({
@@ -14,12 +13,6 @@ export class NetworkService {
     rawg: 'https://api.rawg.io/api/',
     backend: 'https://hadesapi.iocky.com/',
     local: 'https://hades-api.onrender.com/'
-  }
-
-  private getTmdbHeaders() {
-    return new HttpHeaders()
-      .set('accept', 'application/json')
-      .set('Authorization', `Bearer ${creds.TMDB.accessToken}`)
   }
 
   private isUserLoggedIn: boolean = false;
@@ -52,38 +45,27 @@ export class NetworkService {
     return new Headers().set('Authorization', this.getSessionId())
   }
 
-  // hard coded
-  public getTmdbConfig() {
-    return this.http.get(`${this.endpoints.tmdb}configuration`, { headers: this.getTmdbHeaders() })
-  }
-
   public getMovieGenres() {
-    // return this.http.get(`${this.endpoints.tmdb}genre/movie/list?language=en`, { headers: this.getTmdbHeaders() })
     return this.http.get(`${this.endpoints.local}genres`)
   }
 
   public getMovieDetails(movieId: string) {
-    // return this.http.get(`${this.endpoints.tmdb}movie/${movieId}`, { headers: this.getTmdbHeaders() })
     return this.http.get(`${this.endpoints.local}movie/details?item_id=${movieId}`)
   }
 
   public getTvGenres() {
-    //return this.http.get(`${this.endpoints.tmdb}genre/tv/list?language=en`, { headers: this.getTmdbHeaders() })
     return this.http.get(`${this.endpoints.local}tv/genres`)
   }
 
   public getTvDetails(id: string) {
-    // return this.http.get(`${this.endpoints.tmdb}tv/${id}`, { headers: this.getTmdbHeaders() })
     return this.http.get(`${this.endpoints.local}tv/details?item_id=${id}`)
   }
 
   public getGameDetails(id: string) {
-    // return this.http.get(`${this.endpoints.rawg}games/${id}?key=${creds.RAWG.key}`)
     return this.http.get(`${this.endpoints.local}game/details?item_id=${id}`)
   }
 
   public getGameGenres() {
-    // return this.http.get(`${this.endpoints.rawg}genres?key=${creds.RAWG.key}`)
     return this.http.get(`${this.endpoints.local}game/genres`)
   }
 
@@ -92,31 +74,14 @@ export class NetworkService {
   }
 
   public getMoviesWithGenreId(genre_string: string) {
-    // return this.http.get(`${this.endpoints.tmdb}discover/movie`, {
-    //   params: {
-    //     "with_genres": genre_string
-    //   },
-    //   headers: this.getTmdbHeaders()
-    // })
     return this.http.get(`${this.endpoints.local}movie/genre-id?genre_id=${genre_string}`)
   }
 
   public getTvWithGenreId(genre_string: string) {
-    // return this.http.get(`${this.endpoints.tmdb}discover/tv`, {
-    //   params: {
-    //     "with_genres": genre_string
-    //   },
-    //   headers: this.getTmdbHeaders()
-    // })
     return this.http.get(`${this.endpoints.local}tv/genre-id?genre_id=${genre_string}`)
   }
 
   public getGamesWithGenreId(genre_string: string) {
-    // return this.http.get(`${this.endpoints.rawg}games?key=${creds.RAWG.key}`, {
-    //   params: {
-    //     "genres": genre_string
-    //   }
-    // })
     return this.http.get(`${this.endpoints.local}game/genre-id?genre_id=${genre_string}`)
   }
 
@@ -125,32 +90,26 @@ export class NetworkService {
   }
 
   public getPopularMovies() {
-    // return this.http.get(`${this.endpoints.tmdb}movie/popular`, { headers: this.getTmdbHeaders() })
     return this.http.get(`${this.endpoints.local}movie/popular`)
   }
 
   public getPopularTv() {
-    // return this.http.get(`${this.endpoints.tmdb}discover/tv?page=1&sort_by=popularity.desc`, { headers: this.getTmdbHeaders() })
     return this.http.get(`${this.endpoints.local}tv/popular`)
   }
 
   public getPopularGames() {
-    // return this.http.get(`${this.endpoints.rawg}games?key=${creds.RAWG.key}&metacritic=80,100`)
     return this.http.get(`${this.endpoints.local}game/popular`)
   }
 
   public searchMovies(searchTerm: string) {
-    // return this.http.get(`${this.endpoints.tmdb}search/movie?query=${searchTerm}`, { headers: this.getTmdbHeaders() })
     return this.http.get(`${this.endpoints.local}movie/search?query=${searchTerm}`)
   }
 
   public searchTv(searchTerm: string) {
-    // return this.http.get(`${this.endpoints.tmdb}search/tv?query=${searchTerm}`, { headers: this.getTmdbHeaders() })
     return this.http.get(`${this.endpoints.local}tv/search?query=${searchTerm}`)
   }
 
   public searchGames(searchTerm: string) {
-    // return this.http.get(`${this.endpoints.rawg}games?key=${creds.RAWG.key}&search=${searchTerm}`)
     return this.http.get(`${this.endpoints.local}game/search?query=${searchTerm}`)
   }
 
@@ -192,11 +151,11 @@ export class NetworkService {
   }
 
   public getSimilarMovies(id: any) {
-    return this.http.get(`${this.endpoints.tmdb}/movie/${id}/similar`, { headers: this.getTmdbHeaders() })
+    return this.http.get(`${this.endpoints.local}/movie/similar?item_id=${id}`)
   }
 
   public getSimilarTv(id: any) {
-    return this.http.get(`${this.endpoints.tmdb}/tv/${id}/similar`, { headers: this.getTmdbHeaders() })
+    return this.http.get(`${this.endpoints.local}/tv/similar?item_id=${id}`)
   }
 
   public updateWishlist(data: any) {
