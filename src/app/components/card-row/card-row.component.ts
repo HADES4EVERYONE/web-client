@@ -12,4 +12,7 @@ import { CommonModule } from '@angular/common';
 export class CardRowComponent {
   @Input() options: any = {};
   @Input() items: any = [];
+  @Input() itemsLoaded: boolean = false;
+
+  public loadingItems = Array(8).fill(0);
 }
