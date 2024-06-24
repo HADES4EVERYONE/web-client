@@ -23,6 +23,11 @@ export class TvComponent implements OnInit {
     return g_2.weight - g_1.weight
   }
 
+  public isItemListLoaded = {
+    calcReccs: false,
+    genreReccs: false
+  }
+
   ngOnInit(): void {
     this.data.getUserModel().subscribe((res: any) => {
       if (res.data) {
@@ -49,6 +54,7 @@ export class TvComponent implements OnInit {
             })
 
             this.genreReccs.sort(this.sortByWeight)
+            this.isItemListLoaded.genreReccs = true;
           })
         }
         else {
@@ -74,6 +80,7 @@ export class TvComponent implements OnInit {
           })
 
           this.calcReccs.sort(this.sortByWeight)
+          this.isItemListLoaded.calcReccs = true;
         })
       }
     })
