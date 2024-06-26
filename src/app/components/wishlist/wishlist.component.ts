@@ -16,6 +16,12 @@ export class WishlistComponent implements OnInit {
   wishlistTVShows: any[] = [];
   wishlistGames: any[] = [];
 
+  loadedState = {
+    m: false,
+    t: false,
+    g: false
+  }
+
   constructor(private __network: NetworkService) { }
 
   getAsyncObj(idArr: any, type: string) {
@@ -51,19 +57,26 @@ export class WishlistComponent implements OnInit {
         this.__network.getParallelData(this.getAsyncObj(mids, 'm')).subscribe((response: any) => {
           Object.keys(response).forEach(r => {
             this.wishlistMovies.push(response[r]);
+
           })
+
+          this.loadedState.m = true;
         })
 
         this.__network.getParallelData(this.getAsyncObj(tids, 't')).subscribe((response: any) => {
           Object.keys(response).forEach(r => {
             this.wishlistTVShows.push(response[r]);
           })
+
+          this.loadedState.t = true;
         })
 
-        this.__network.getParallelData(this.getAsyncObj(mids, 'g')).subscribe((response: any) => {
+        this.__network.getParallelData(this.getAsyncObj(gids, 'g')).subscribe((response: any) => {
           Object.keys(response).forEach(r => {
             this.wishlistGames.push(response[r]);
           })
+
+          this.loadedState.g = true;
         })
       }
     })

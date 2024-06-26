@@ -22,13 +22,16 @@
             <div class="p-2 w-full items-center">
                 <h4 class="text-2xl dark:text-white">Showing results for "{{searchedTerm}}"..</h4>
                 <div class="mb-2">
-                    <app-card-row [items]="results.movie" [options]="{title: '', type: 'tmdb_movie'}"></app-card-row>
+                    <app-card-row [items]="results.movie" [itemsLoaded]="loadedSearchResults"
+                        [options]="{title: '', type: 'tmdb_movie'}"></app-card-row>
                 </div>
                 <div class="mb-2">
-                    <app-card-row [items]="results.tv" [options]="{title: '', type: 'tmdb_tv'}"></app-card-row>
+                    <app-card-row [items]="results.tv" [itemsLoaded]="loadedSearchResults"
+                        [options]="{title: '', type: 'tmdb_tv'}"></app-card-row>
                 </div>
                 <div class="mb-2">
-                    <app-card-row [items]="results.game" [options]="{title: '', type: 'rawg'}"></app-card-row>
+                    <app-card-row [items]="results.game" [itemsLoaded]="loadedSearchResults"
+                        [options]="{title: '', type: 'rawg'}"></app-card-row>
                 </div>
             </div>
         </section>

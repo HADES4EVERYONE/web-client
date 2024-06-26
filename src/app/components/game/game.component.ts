@@ -23,6 +23,11 @@ export class GameComponent implements OnInit {
     return g_2.weight - g_1.weight
   }
 
+  public isItemListLoaded = {
+    calcReccs: false,
+    genreReccs: false
+  }
+
   ngOnInit(): void {
     this.data.getUserModel().subscribe((res: any) => {
       if (res.data) {
@@ -47,7 +52,8 @@ export class GameComponent implements OnInit {
               this.genreReccs.push({ genre: genre_name, results: res[r].results, weight })
             })
 
-            this.genreReccs.sort(this.sortByWeight)
+            this.genreReccs.sort(this.sortByWeight);
+            this.isItemListLoaded.genreReccs = true;
           })
         }
         else {
@@ -72,7 +78,8 @@ export class GameComponent implements OnInit {
             this.calcReccs.push({ ...res[d], weight: weightMap[d] })
           })
 
-          this.calcReccs.sort(this.sortByWeight)
+          this.calcReccs.sort(this.sortByWeight);
+          this.isItemListLoaded.calcReccs = true;
         })
       }
     })

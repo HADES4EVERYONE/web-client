@@ -151,11 +151,11 @@ export class NetworkService {
   }
 
   public getSimilarMovies(id: any) {
-    return this.http.get(`${this.endpoints.local}/movie/similar?item_id=${id}`)
+    return this.http.get(`${this.endpoints.local}movie/similar?item_id=${id}`)
   }
 
   public getSimilarTv(id: any) {
-    return this.http.get(`${this.endpoints.local}/tv/similar?item_id=${id}`)
+    return this.http.get(`${this.endpoints.local}tv/similar?item_id=${id}`)
   }
 
   public updateWishlist(data: any) {

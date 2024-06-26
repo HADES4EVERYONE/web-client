@@ -16,6 +16,12 @@ export class HomeComponent implements OnInit {
   constructor(private __network: NetworkService) {
   }
 
+  loading = {
+    movieItems: false,
+    tvItems: false,
+    gameItems: false
+  }
+
   public popularMovieSubscription = new Subscription();
   public popularGamesSubsrciption = new Subscription();
   public popularTvSubscription = new Subscription();
@@ -28,14 +34,17 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.popularMovieSubscription = this.__network.getPopularMovies().subscribe((res: any) => {
+      this.loading.movieItems = true;
       this.movieItems = res.results;
     });
 
     this.popularGamesSubsrciption = this.__network.getPopularGames().subscribe((res: any) => {
+      this.loading.tvItems = true;
       this.gameItems = res.results;
     })
 
     this.popularTvSubscription = this.__network.getPopularTv().subscribe((res: any) => {
+      this.loading.gameItems = true;
       this.tvItems = res.results;
     })
   }

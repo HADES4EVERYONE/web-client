@@ -1,9 +1,12 @@
 <div class="m-2">
-    <app-card-row [items]="movieItems" [options]="{title: 'Popular Movies', type: 'tmdb_movie'}"></app-card-row>
+    <app-card-row [items]="movieItems" [options]="{title: 'Popular Movies', type: 'tmdb_movie'}"
+        [itemsLoaded]="loading.movieItems"></app-card-row>
 </div>
 <div class="m-2">
-    <app-card-row [items]="tvItems" [options]="{title: 'Popular TV Shows', type: 'tmdb_tv'}"></app-card-row>
+    <app-card-row [items]="tvItems" [options]="{title: 'Popular TV Shows', type: 'tmdb_tv'}"
+        [itemsLoaded]="loading.tvItems"></app-card-row>
 </div>
 <div class="m-2">
-    <app-card-row [items]="gameItems" [options]="{title: 'Popular Games', type: 'rawg'}"></app-card-row>
+    <app-card-row [items]="gameItems" [options]="{title: 'Popular Games', type: 'rawg'}"
+        [itemsLoaded]="loading.gameItems"></app-card-row>
 </div>

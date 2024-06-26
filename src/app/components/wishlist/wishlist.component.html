@@ -29,11 +29,14 @@
   <h4 class="text-2xl dark:text-white">Your wishlist</h4>
 </div>
 <div class="m-2">
-  <app-card-row [items]="wishlistMovies" [options]="{title: 'Movies', type: 'tmdb_movie'}"></app-card-row>
+  <app-card-row [items]="wishlistMovies" [itemsLoaded]="loadedState.m"
+    [options]="{title: 'Movies', type: 'tmdb_movie'}"></app-card-row>
 </div>
 <div class="m-2">
-  <app-card-row [items]="wishlistTVShows" [options]="{title: 'TV Shows', type: 'tmdb_tv'}"></app-card-row>
+  <app-card-row [items]="wishlistTVShows" [itemsLoaded]="loadedState.t"
+    [options]="{title: 'TV Shows', type: 'tmdb_tv'}"></app-card-row>
 </div>
 <div class="m-2">
-  <app-card-row [items]="wishlistGames" [options]="{title: 'Games', type: 'rawg'}"></app-card-row>
+  <app-card-row [items]="wishlistGames" [itemsLoaded]="loadedState.g"
+    [options]="{title: 'Games', type: 'rawg'}"></app-card-row>
 </div>
