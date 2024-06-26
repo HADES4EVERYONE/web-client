@@ -16,6 +16,7 @@ export class SearchComponent {
 
   public searchTerm = '';
   public searchedTerm = '';
+  public loadedSearchResults = false;
 
   public results: any = {
     movie: [],
@@ -40,6 +41,8 @@ export class SearchComponent {
       this.results.movie = res[0].results;
       this.results.tv = res[1].results;
       this.results.game = res[2].results;
+
+      this.loadedSearchResults = true;
     })
   }
 }

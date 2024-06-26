@@ -27,6 +27,8 @@ export class ItemDetailsComponent implements OnInit {
 
   public successMessage = '';
 
+  public loadedSimilar = false;
+
   public allRating: any = [
     {
       value: 1,
@@ -168,6 +170,7 @@ export class ItemDetailsComponent implements OnInit {
         if (res.results.length) {
           this.similar = res.results
           this.isSimilarAvailable = true
+          this.loadedSimilar = true;
         }
       })
     } else if (this.resType === 'tmdb_tv') {
@@ -175,6 +178,7 @@ export class ItemDetailsComponent implements OnInit {
         if (res.results.length) {
           this.similar = res.results
           this.isSimilarAvailable = true
+          this.loadedSimilar = true;
         }
       })
     }
