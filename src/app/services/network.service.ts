@@ -12,7 +12,6 @@ export class NetworkService {
     tmdbImage: 'http://image.tmdb.org/t/p/',
     rawg: 'https://api.rawg.io/api/',
     backend: 'https://hadesapi.iocky.com/',
-    local: 'https://hades-api.onrender.com/'
   }
 
   private isUserLoggedIn: boolean = false;
@@ -46,27 +45,27 @@ export class NetworkService {
   }
 
   public getMovieGenres() {
-    return this.http.get(`${this.endpoints.local}genres`)
+    return this.http.get(`${this.endpoints.backend}genres`)
   }
 
   public getMovieDetails(movieId: string) {
-    return this.http.get(`${this.endpoints.local}movie/details?item_id=${movieId}`)
+    return this.http.get(`${this.endpoints.backend}movie/details?item_id=${movieId}`)
   }
 
   public getTvGenres() {
-    return this.http.get(`${this.endpoints.local}tv/genres`)
+    return this.http.get(`${this.endpoints.backend}tv/genres`)
   }
 
   public getTvDetails(id: string) {
-    return this.http.get(`${this.endpoints.local}tv/details?item_id=${id}`)
+    return this.http.get(`${this.endpoints.backend}tv/details?item_id=${id}`)
   }
 
   public getGameDetails(id: string) {
-    return this.http.get(`${this.endpoints.local}game/details?item_id=${id}`)
+    return this.http.get(`${this.endpoints.backend}game/details?item_id=${id}`)
   }
 
   public getGameGenres() {
-    return this.http.get(`${this.endpoints.local}game/genres`)
+    return this.http.get(`${this.endpoints.backend}game/genres`)
   }
 
   public getAllGenres() {
@@ -74,15 +73,15 @@ export class NetworkService {
   }
 
   public getMoviesWithGenreId(genre_string: string) {
-    return this.http.get(`${this.endpoints.local}movie/genre-id?genre_id=${genre_string}`)
+    return this.http.get(`${this.endpoints.backend}movie/genre-id?genre_id=${genre_string}`)
   }
 
   public getTvWithGenreId(genre_string: string) {
-    return this.http.get(`${this.endpoints.local}tv/genre-id?genre_id=${genre_string}`)
+    return this.http.get(`${this.endpoints.backend}tv/genre-id?genre_id=${genre_string}`)
   }
 
   public getGamesWithGenreId(genre_string: string) {
-    return this.http.get(`${this.endpoints.local}game/genre-id?genre_id=${genre_string}`)
+    return this.http.get(`${this.endpoints.backend}game/genre-id?genre_id=${genre_string}`)
   }
 
   public getParallelData(genreObj: any) {
@@ -90,27 +89,27 @@ export class NetworkService {
   }
 
   public getPopularMovies() {
-    return this.http.get(`${this.endpoints.local}movie/popular`)
+    return this.http.get(`${this.endpoints.backend}movie/popular`)
   }
 
   public getPopularTv() {
-    return this.http.get(`${this.endpoints.local}tv/popular`)
+    return this.http.get(`${this.endpoints.backend}tv/popular`)
   }
 
   public getPopularGames() {
-    return this.http.get(`${this.endpoints.local}game/popular`)
+    return this.http.get(`${this.endpoints.backend}game/popular`)
   }
 
   public searchMovies(searchTerm: string) {
-    return this.http.get(`${this.endpoints.local}movie/search?query=${searchTerm}`)
+    return this.http.get(`${this.endpoints.backend}movie/search?query=${searchTerm}`)
   }
 
   public searchTv(searchTerm: string) {
-    return this.http.get(`${this.endpoints.local}tv/search?query=${searchTerm}`)
+    return this.http.get(`${this.endpoints.backend}tv/search?query=${searchTerm}`)
   }
 
   public searchGames(searchTerm: string) {
-    return this.http.get(`${this.endpoints.local}game/search?query=${searchTerm}`)
+    return this.http.get(`${this.endpoints.backend}game/search?query=${searchTerm}`)
   }
 
   public getParallelSearch(searchTerm: string) {
@@ -151,11 +150,11 @@ export class NetworkService {
   }
 
   public getSimilarMovies(id: any) {
-    return this.http.get(`${this.endpoints.local}movie/similar?item_id=${id}`)
+    return this.http.get(`${this.endpoints.backend}movie/similar?item_id=${id}`)
   }
 
   public getSimilarTv(id: any) {
-    return this.http.get(`${this.endpoints.local}tv/similar?item_id=${id}`)
+    return this.http.get(`${this.endpoints.backend}tv/similar?item_id=${id}`)
   }
 
   public updateWishlist(data: any) {
